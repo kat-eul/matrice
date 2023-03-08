@@ -10,6 +10,7 @@
 
 #include "matrice.hpp"
 #include <iostream>
+#include <math.h>
 using namespace std;
 
 /**
@@ -17,7 +18,7 @@ using namespace std;
  *  
  * @param n le nombre de lignes
  * @param m le nombre de colonnes
- * @return L'adresse de la matrice allouée
+ * @return A la matrice allouée, et nulle
  */
 void alloc_matrice(Matrice *A, int n, int m){
     A->n = n;
@@ -71,7 +72,7 @@ void    aff_matrice(Matrice *A){
  * 
  * @param A une matrice
  * @param B une matrice
- * @param Res le résultat du produit de A et B
+ * @return Res le résultat du produit de A et B
  * @return true si les matrices A et B sont compatibles
  * @return false sinon
  */
@@ -99,7 +100,7 @@ bool    produit_matriciel_naif(Matrice *A, Matrice *B, Matrice *Res){
  * 
  * @param L une matrice triangulaire inferieur
  * @param b un vecteur
- * @param x le résultat du système
+ * @return x le résultat du système
  * @return true si la matrice L et le vecteur b sont compatibles
  * @return false sinon
  */
@@ -124,7 +125,7 @@ bool    resolution_systeme_triangulaire_inferieur(Matrice *L, Matrice *b, Matric
  * 
  * @param U une matrice triangulaire superieure
  * @param b un vecteur
- * @param x le résultat du système 
+ * @return x le résultat du système 
  * @return true si la matrice U et le vecteur b sont compatibles
  * @return false sinon 
  */
@@ -142,4 +143,32 @@ bool    resolution_systeme_triangulaire_superieur(Matrice *U, Matrice *b, Matric
     }else{
         return false;
     }
+}
+
+/**
+ * @brief Décomposition de la matrice A tel que A=B*transposee(B)
+ * 
+ * @param A une matrice symétrique
+ * @return B la matrice triangulaire inferieure étant le resultat de la decomposition
+ */
+void cholesky(Matrice *A, Matrice *B){
+    alloc_matrice(B, A->n, A->m);
+    for(int i=0; i<A->n; i++){
+        float somme = 0;
+        for(int k=0; k<i-1; k++){
+            somme += A->matrice[i][k]*A->matrice[i][k];
+        }
+        B->matrice[i][i] = sqrt(A->matrice[i][i] - somme);
+        for(int j= i; j<A->n; j++){
+            float somme = 0;
+            for(int k=0; k<i-1; k++){
+                somme += A->matrice[j][k]*A->matrice[i][k];
+            }
+            B->matrice[j][i] = (A->matrice[j][i] - somme)/A->matrice[i][i];
+
+        }
+
+    }
+
+
 }
