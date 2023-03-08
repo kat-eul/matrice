@@ -76,5 +76,70 @@ void    aff_matrice(Matrice *A){
  * @return false sinon
  */
 bool    produit_matriciel_naif(Matrice *A, Matrice *B, Matrice *Res){
-    //TODO
+    alloc_matrice(Res, A->n, B->m);
+    
+    if(A->m == B->n){
+        for(int i=0; i<A->n; i++){
+            for(int j=0; j<B->m; j++){
+                float s = 0;
+                for(int k=0; k<A->m; k++){
+                    s += A->matrice[i][k]*B->matrice[k][j];
+                }
+                Res->matrice[i][j] = s;
+            }
+        }
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/**
+ * @brief Résout le système triangulaire inferieur
+ * 
+ * @param L une matrice triangulaire inferieur
+ * @param b un vecteur
+ * @param x le résultat du système
+ * @return true si la matrice L et le vecteur b sont compatibles
+ * @return false sinon
+ */
+bool    resolution_systeme_triangulaire_inferieur(Matrice *L, Matrice *b, Matrice *x){
+    if(L->n == b->n){
+        alloc_matrice(x, L->n, 1);
+        for(int i=0; i<L->n; i++){
+            float s = b->matrice[i][0];
+            for(int j=0; j<i; j++){
+                s-=L->matrice[i][j]*x->matrice[j][0];
+            }
+            x->matrice[i][0] = s/L->matrice[i][i];
+        }
+        return true;
+    }else{
+        return false;
+    }
+}
+
+/**
+ * @brief Résout le système triangulaire superieur
+ * 
+ * @param U une matrice triangulaire superieure
+ * @param b un vecteur
+ * @param x le résultat du système 
+ * @return true si la matrice U et le vecteur b sont compatibles
+ * @return false sinon 
+ */
+bool    resolution_systeme_triangulaire_superieur(Matrice *U, Matrice *b, Matrice *x){
+    if(U->n == b->n){
+        alloc_matrice(x, U->n, 1);
+        for(int i=U->n-1; i>=0; i--){
+            float s = b->matrice[i][0];
+            for(int j=i+1; j<U->n; j++){
+                s-=U->matrice[i][j]*x->matrice[j][0];
+            }
+            x->matrice[i][0] = s/U->matrice[i][i];
+        }
+        return true;
+    }else{
+        return false;
+    }
 }
