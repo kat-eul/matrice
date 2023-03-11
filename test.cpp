@@ -70,16 +70,16 @@ void test_resolution_systeme_triangulaire_superieur(){
 
 void test_cholesky(){
     cout << "Cholesky ------------------------------------" << endl;
-    Matrice *A = new Matrice, *B = new Matrice;
+    Matrice *A = new Matrice;
     alloc_matrice(A, 4, 4);
 
     A->matrice[0][0] = 1; A->matrice[0][1] = 1; A->matrice[0][2] = 1; A->matrice[0][3] = 1; 
-    A->matrice[1][0] = 1; A->matrice[1][1] = 2; A->matrice[1][2] = 3; A->matrice[1][3] = 4; 
-    A->matrice[2][0] = 1; A->matrice[2][1] = 3; A->matrice[2][2] = 6; A->matrice[2][3] = 10; 
-    A->matrice[3][0] = 1; A->matrice[3][1] = 4; A->matrice[3][2] = 10; A->matrice[3][3] =20 ; 
+    A->matrice[1][0] = 1; A->matrice[1][1] = 5; A->matrice[1][2] = 5; A->matrice[1][3] = 5; 
+    A->matrice[2][0] = 1; A->matrice[2][1] = 5; A->matrice[2][2] = 14; A->matrice[2][3] = 14; 
+    A->matrice[3][0] = 1; A->matrice[3][1] = 5; A->matrice[3][2] = 14; A->matrice[3][3] =15 ; 
 
-    cholesky(A,B);
-    aff_matrice(B);
+    cholesky(A);
+    aff_matrice(A);
 }
 
 int main(){
@@ -87,5 +87,5 @@ int main(){
     //test_produit_matriciel_naif();
     //test_resolution_systeme_triangulaire_inferieur();
     //test_resolution_systeme_triangulaire_superieur();
-    test_cholesky();
+    //test_cholesky();
 }

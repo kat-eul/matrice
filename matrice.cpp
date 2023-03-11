@@ -149,26 +149,27 @@ bool    resolution_systeme_triangulaire_superieur(Matrice *U, Matrice *b, Matric
  * @brief Décomposition de la matrice A tel que A=B*transposee(B)
  * 
  * @param A une matrice symétrique
- * @return B la matrice triangulaire inferieure étant le resultat de la decomposition
+ * @return A la matrice triangulaire superieure étant le resultat de la decomposition de cholesky
+ * 
  */
-void cholesky(Matrice *A, Matrice *B){
-    alloc_matrice(B, A->n, A->m);
+void cholesky(Matrice *A){
     for(int i=0; i<A->n; i++){
+
         float somme = 0;
-        for(int k=0; k<i-1; k++){
-            somme += A->matrice[i][k]*A->matrice[i][k];
+        for(int k=0; k<i; k++){
+            somme += A->matrice[k][i]*A->matrice[k][i];
         }
-        B->matrice[i][i] = sqrt(A->matrice[i][i] - somme);
-        for(int j= i; j<A->n; j++){
+
+        A->matrice[i][i] = sqrt(A->matrice[i][i] - somme);                      // Affectation de la valeur du pivot 
+
+        for(int j= i+1; j<A->n; j++){
             float somme = 0;
-            for(int k=0; k<i-1; k++){
-                somme += A->matrice[j][k]*A->matrice[i][k];
+            for(int k=0; k<i; k++){
+                somme += A->matrice[k][j]*A->matrice[k][i];
             }
-            B->matrice[j][i] = (A->matrice[j][i] - somme)/A->matrice[i][i];
 
+            A->matrice[i][j] = (A->matrice[j][i] - somme)/A->matrice[i][i];     // Affectation des valeurs sur la ligne du pivot 
+            A->matrice[j][i] = 0;
         }
-
     }
-
-
 }
