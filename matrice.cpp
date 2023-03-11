@@ -146,6 +146,24 @@ bool    resolution_systeme_triangulaire_superieur(Matrice *U, Matrice *b, Matric
 }
 
 /**
+ * @brief Décomposition LU de la matrice A tel que A=LU
+ * 
+ * @param A une matrice 
+ * @return A le résultat de la décomposition LU
+ */
+void decomposition_LU(Matrice *A){
+    for(int i=0; i<A->n; i++){
+        for(int j=i+1; j<A->n; j++){
+            float l = A->matrice[j][i]/A->matrice[i][i];
+            for(int k=i+1; k<A->n; k++){
+                A->matrice[j][k] -= l*A->matrice[i][k];
+            }
+            A->matrice[j][i] = l;
+        }
+    }
+}
+
+/**
  * @brief Décomposition de la matrice A tel que A=B*transposee(B)
  * 
  * @param A une matrice symétrique

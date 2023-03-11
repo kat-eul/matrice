@@ -68,6 +68,23 @@ void test_resolution_systeme_triangulaire_superieur(){
     }
 }
 
+void test_decomposition_LU(){
+    Matrice *A = new Matrice;
+    alloc_matrice(A, 3,3);
+
+    A->matrice[0][0] = 2; A->matrice[0][1] = 3; A->matrice[0][2] = 1;
+    A->matrice[1][0] = 6; A->matrice[1][1] = 12; A->matrice[1][2] = 5;
+    A->matrice[2][0] = 4; A->matrice[2][1] = 9; A->matrice[2][2] = 5;
+
+    decomposition_LU(A);
+    /* Résultat attendu
+     *  2 | 3 | 1
+     *  3 | 3 | 2
+     *  2 | 1 | 1
+     */
+    aff_matrice(A);
+}
+
 void test_cholesky(){
     cout << "Cholesky ------------------------------------" << endl;
     Matrice *A = new Matrice;
@@ -79,6 +96,12 @@ void test_cholesky(){
     A->matrice[3][0] = 1; A->matrice[3][1] = 5; A->matrice[3][2] = 14; A->matrice[3][3] =15 ; 
 
     cholesky(A);
+    /* Résultat attendu
+     *  1 | 1 | 1 | 1
+     *  0 | 2 | 2 | 2
+     *  0 | 0 | 3 | 3
+     *  0 | 0 | 0 | 1
+     */
     aff_matrice(A);
 }
 
@@ -87,5 +110,6 @@ int main(){
     //test_produit_matriciel_naif();
     //test_resolution_systeme_triangulaire_inferieur();
     //test_resolution_systeme_triangulaire_superieur();
+    //test_decomposition_LU();
     //test_cholesky();
 }
